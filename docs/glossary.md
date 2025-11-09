@@ -8,3 +8,6 @@ Modern frontend build tool that provides extremely fast development server start
 
 ## ES Modules
 JavaScript's official standard module system using `import` and `export` syntax. Natively supported by modern browsers, allowing JavaScript files to declare dependencies and share code without bundlers, enabling faster loading through static analysis and tree-shaking.
+
+## package-lock.json
+Automatically generated file that locks exact versions of all dependencies and their sub-dependencies in a project. Ensures consistent installations across different machines and times by recording the precise dependency tree, including version numbers, resolved URLs, and integrity hashes.

@@ -5,11 +5,12 @@ import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, './src'),
+    base: '/pixelated-animation/',
+    plugins: [react(), tailwindcss()],
+    resolve: {
+        alias: {
+            '@': resolve(__dirname, './src'),
+        },
     },
-  },
-  assetsInclude: ['**/*.txt'],
+    assetsInclude: ['**/*.txt'],
 })

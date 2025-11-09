@@ -92,7 +92,7 @@ function App() {
                         <Lion side="right" position={0} />
 
                         <AnimatePresence mode="wait">
-                            {animationState === 'playing' && currentDialogue < dialogues.length && (
+                            {animationState === 'playing' && currentDialogue < dialogues.length && dialogues[currentDialogue] && (
                                 <SpeechBubble
                                     key={currentDialogue}
                                     text={dialogues[currentDialogue].text}

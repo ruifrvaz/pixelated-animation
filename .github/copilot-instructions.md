@@ -2,6 +2,10 @@
 
 An animated stage scene featuring two pixelated lions entering from opposite sides to engage in a comic-style dialogue with synchronized murmuring sound effects.
 
+## Documentation
+
+When the user asks for information about technical terms, concepts, or tools, add concise definitions to `docs/glossary.md`. Keep explanations minimal (one paragraph maximum) without code examples.
+
 **Experience Qualities**:
 1. **Whimsical** - Playful pixelated art style and comic balloon dialogue create a lighthearted, retro gaming aesthetic
 2. **Theatrical** - Stage-like presentation with curtain-rise entrance adds drama and anticipation to the encounter

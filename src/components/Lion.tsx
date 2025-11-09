@@ -14,9 +14,10 @@ export function Lion({ side, position }: LionProps) {
             transition={{ duration: 2, ease: 'easeInOut' }}
             style={{
                 position: 'absolute',
-                bottom: '120px',
+                bottom: '80px',
                 left: side === 'left' ? '20%' : 'auto',
                 right: side === 'right' ? '20%' : 'auto',
+                zIndex: 5,
             }}
             className="relative"
         >

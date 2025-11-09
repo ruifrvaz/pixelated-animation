@@ -6,6 +6,7 @@ import { Lion } from '@/components/Lion'
 import { SpeechBubble } from '@/components/SpeechBubble'
 import { useAudioMurmur } from '@/hooks/use-audio-murmur'
 import dialoguesText from '@/assets/documents/lion-dialogues.txt?raw'
+import curtainImage from '@/assets/images/pixelated_curtain.png'
 
 interface Dialogue {
     speaker: 'left' | 'right'
@@ -24,7 +25,7 @@ const parseDialogues = (text: string): Dialogue[] => {
 }
 
 function App() {
-    const [animationState, setAnimationState] = useState<'idle' | 'playing' | 'complete'>('idle')
+    const [animationState, setAnimationState] = useState<'idle' | 'curtain-opening' | 'playing' | 'complete'>('idle')
     const [currentDialogue, setCurrentDialogue] = useState(0)
     const [showCurtain, setShowCurtain] = useState(true)
     const [dialogues, setDialogues] = useState<Dialogue[]>([])
@@ -37,21 +38,30 @@ function App() {
 
     const startAnimation = () => {
         initAudio()
-        setAnimationState('playing')
+        setAnimationState('curtain-opening')
         setCurrentDialogue(0)
         setShowCurtain(true)
 
+        // Curtain opens over 2 seconds
         setTimeout(() => {
             setShowCurtain(false)
-        }, 1000)
+            // Start dialogue after curtain is fully open
+            setTimeout(() => {
+                setAnimationState('playing')
+            }, 500)
+        }, 2000)
     }
 
     const handleDialogueComplete = () => {
         if (currentDialogue < dialogues.length - 1) {
             setCurrentDialogue((prev) => prev + 1)
         } else {
+            // Drop curtain after final dialogue
             setTimeout(() => {
-                setAnimationState('complete')
+                setShowCurtain(true)
+                setTimeout(() => {
+                    setAnimationState('complete')
+                }, 2000)
             }, 1000)
         }
     }
@@ -66,20 +76,19 @@ function App() {
         <div className="min-h-screen bg-background flex flex-col items-center justify-center p-8">
             <div className="relative w-full max-w-4xl aspect-video bg-gradient-to-b from-muted to-background border-4 border-primary rounded-lg overflow-hidden shadow-2xl">
                 <AnimatePresence>
-                    {showCurtain && (
+                    {showCurtain && animationState !== 'idle' && (
                         <motion.div
-                            initial={{ scaleY: 1 }}
-                            animate={{ scaleY: animationState === 'idle' ? 1 : 0 }}
-                            exit={{ scaleY: 0 }}
-                            transition={{ duration: 1, ease: 'easeInOut' }}
-                            className="absolute inset-0 bg-primary origin-top z-50 flex items-center justify-center"
+                            initial={{ y: animationState === 'curtain-opening' ? 0 : '-100%' }}
+                            animate={{ y: animationState === 'complete' ? 0 : '-100%' }}
+                            exit={{ y: '-100%' }}
+                            transition={{ duration: 2, ease: 'easeInOut' }}
+                            className="absolute inset-0 z-50 overflow-hidden"
                         >
-                            <div className="text-center">
-                                <h1 className="text-4xl font-bold text-primary-foreground mb-4 font-mono">
-                                    THE STAGE
-                                </h1>
-                                <div className="w-24 h-1 bg-accent mx-auto" />
-                            </div>
+                            <img
+                                src={curtainImage}
+                                alt="Stage Curtain"
+                                className="pixel-art w-full h-full object-cover"
+                            />
                         </motion.div>
                     )}
                 </AnimatePresence>
@@ -102,23 +111,6 @@ function App() {
                                 />
                             )}
                         </AnimatePresence>
-
-                        {animationState === 'complete' && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="absolute inset-0 flex items-center justify-center"
-                            >
-                                <div className="text-center">
-                                    <h2 className="text-3xl font-bold text-accent mb-4 font-mono">
-                                        THE END
-                                    </h2>
-                                    <p className="text-foreground/80 text-sm">
-                                        A pixelated performance
-                                    </p>
-                                </div>
-                            </motion.div>
-                        )}
                     </>
                 )}
 

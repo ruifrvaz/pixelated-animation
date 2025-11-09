@@ -18,7 +18,7 @@ export function SpeechBubble({ text, side, onComplete, playSound }: SpeechBubble
                 setDisplayedText((prev) => prev + text[currentIndex])
                 playSound()
                 setCurrentIndex((prev) => prev + 1)
-            }, 50)
+            }, 40)
             return () => clearTimeout(timer)
         } else if (currentIndex === text.length && onComplete) {
             const completeTimer = setTimeout(onComplete, 1500)
